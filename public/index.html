@@ -1,0 +1,135 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<title>Repercussion</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+  		<meta name="author" content="">
+
+  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link href="css/normalize.css" rel="stylesheet" >
+		<link href="css/style.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="wrapper">
+			<header>
+				<div class="logo">
+					<a href="http://localhost:3000/">Repercussion</a>
+				</div>
+			</header>
+			<div class="sidebar sidebar--left">
+				<nav class="categories">
+					<p>What are you in the mood for?</p>
+					<ul></ul>
+				</nav>
+				<nav class="playlists">
+					<p>Select a playlist:</p>
+					<ul></ul>
+				</nav>
+				<nav class="playlist">
+					<p class="header"></p>
+					<div class="controls">
+						<button class="actions rewind"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+						<button class="actions play"><i class="fa fa-play" aria-hidden="true"></i></button>
+						<button class="actions pause"><i class="fa fa-pause" aria-hidden="true"></i></button>
+						<button class="actions forward"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+					</div>
+					<ol></ol>
+				</nav>
+			</div>
+			<div class="lines">
+				<span class="line"></span>
+				<span class="line"></span>
+				<span class="line"></span>
+				<span class="line"></span>
+				<span class="line"></span>
+				<span class="line"></span>
+				<span class="line"></span>
+				<span class="line"></span>
+				<span class="line"></span>
+				<span class="line"></span>
+			</div>
+			<section id="container"></section>
+			<div class="sidebar sidebar--right">
+				<div class="controls">
+					<button class="options-button"><i class="fa fa-bars" aria-hidden="true"></i></button>
+					<form class="options">
+						<div class="row">
+							<input class="input-small" id="input-color-r" type="text" placeholder="R (0.86)" value="0.86">
+							<input class="input-small" id="input-color-g" type="text" placeholder="G (0.56)" value="0.56">
+							<input class="input-small" id="input-color-b" type="text" placeholder="B (0.15)" value="0.15">
+							<button id="update-color-button" class="update small" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+						</div>
+						<div class="row">
+							<input id="results-input-color" class="input-results" placeholder="R, G, B Value" disabled>
+						</div>
+						<div class="row">
+							<input id="input-line-height" type="text" placeholder="Line Height (0.15)" value="0.15">
+							<button id="update-line-height-button" class="update small" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+						</div>
+						<div class="row">
+							<input id="results-input-line-height" class="input-results" placeholder="Line Height Value" disabled>
+						</div>
+						<div class="row">
+							<input id="input-frequency" type="text" placeholder="Frequency (32768)" value="32768">
+							<button id="update-frequency-button" class="update small" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+						</div>
+						<div class="row">
+							<input id="results-input-frequency" class="input-results" placeholder="Frequency Value" disabled>
+						</div>
+					</form>
+				</div>
+			</div>
+			<footer></footer>
+		</div>
+
+		<script id="vertexShader" type="x-shader/x-vertex">
+			varying vec2 vUv;
+
+			void main() {
+
+				vUv = uv;
+				gl_Position = vec4( position, 1.0 );
+
+			}
+		</script>
+
+		<script id="fragmentShader" type="x-shader/x-fragment">
+			uniform sampler2D tAudioData;
+			varying vec2 vUv;
+			void main() {
+				// custom variables
+				float backgroundColorR = 1.0;
+				float backgroundColorG = 1.0;
+				float backgroundColorB = 1.0;
+
+				float lineColorR = 0.86;
+				float lineColorG = 0.56;
+				float lineColorB = 0.15;
+
+				float lineHeight = 0.15;
+
+
+				vec3 backgroundColor = vec3( backgroundColorR, backgroundColorG, backgroundColorB );
+
+				// vec3 color = vec3(0.86, 0.27, 0.15);
+				vec3 color = vec3(lineColorR, lineColorG, lineColorB);
+
+				float f = texture2D( tAudioData, vec2( vUv.x, 1.0 ) ).r;
+				// line height
+				float i = step( vUv.y, f ) * step( f - lineHeight, vUv.y );
+
+				gl_FragColor = vec4( mix( backgroundColor, color, i ), 1.0 );
+
+			}
+		</script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/three.min.js"></script>
+		<script src="js/Detector.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>

@@ -1,0 +1,333 @@
+@font-face {
+    font-family: 'Avenir Book';
+    src: url('../assets/fonts/AvenirLTStdBook.eot');
+    src: url('../assets/fonts/AvenirLTStdBook.eot?#iefix') format('embedded-opentype'),
+         url('../assets/fonts/AvenirLTStdBook.woff2') format('woff2'),
+         url('../assets/fonts/AvenirLTStdBook.woff') format('woff'),
+         url('../assets/fonts/AvenirLTStdBook.ttf') format('truetype'),
+         url('../assets/fonts/AvenirLTStdBook.svg#AvenirLTStdBook') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Avenir Medium';
+    src: url('../assets/fonts/avenirltstd-medium.eot');
+    src: url('../assets/fonts/avenirltstd-medium.eot?#iefix') format('embedded-opentype'),
+         url('../assets/fonts/avenirltstd-medium.woff2') format('woff2'),
+         url('../assets/fonts/avenirltstd-medium.woff') format('woff'),
+         url('../assets/fonts/avenirltstd-medium.ttf') format('truetype'),
+         url('../assets/fonts/avenirltstd-medium.svg#avenirltstd-medium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Avenir Heavy';
+    src: url('../assets/fonts/AvenirLTStdHeavy.eot');
+    src: url('../assets/fonts/AvenirLTStdHeavy.eot?#iefix') format('embedded-opentype'),
+         url('../assets/fonts/AvenirLTStdHeavy.woff2') format('woff2'),
+         url('../assets/fonts/AvenirLTStdHeavy.woff') format('woff'),
+         url('../assets/fonts/AvenirLTStdHeavy.ttf') format('truetype'),
+         url('../assets/fonts/AvenirLTStdHeavy.svg#AvenirLTStdHeavy') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	font-family: 'Avenir Book', Helvetica, sans-serif;
+	color: #333;
+}
+
+.wrapper {
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+
+header {
+	position: absolute;
+	left: 20px;
+	top: 20px;
+}
+
+.logo a {
+	font-family: 'Avenir Heavy', Helvetica, sans-serif;
+	text-decoration: none;
+	color: #333;
+    letter-spacing: 1px;
+}
+
+.sidebar {
+	width: 325px;
+	position: absolute;
+	top: 125px;
+}
+
+.sidebar--left {
+	left: 20px;
+	text-align: left;
+}
+
+.sidebar--right {
+	right: 20px;
+    top: 20px;
+	text-align: right;
+}
+
+.sidebar--bottom-right {
+    right: 20px;
+    bottom: 20px;
+    top: initial;
+    text-align: right;
+    z-index: 2;
+}
+
+.sidebar--right .controls {
+    display: none;
+}
+
+.options {
+    margin: 20px 0;
+}
+
+input {
+    margin-bottom: .5rem;
+    font-size: 12px;
+    padding: 5px;
+    border: 1px solid #e1e1e1;
+}
+
+input::-webkit-input-placeholder {
+  color: #ccc;
+}
+input::-moz-placeholder {
+  color: #ccc;
+}
+input:-ms-input-placeholder {
+  color: #ccc;
+}
+input:-moz-placeholder {
+  color: #ccc;
+}
+
+input {
+    width: 173px;
+}
+
+input.input-small {
+    width: 55px;
+}
+
+input.input-results {
+    width: 204px;
+    margin-bottom: 20px;
+}
+
+.fa {
+    font-size: 12px;
+}
+
+#timer-wrapper {
+	position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    -webkit-transition-property: background;
+    -webkit-transition-duration: 2s;
+    color: #fff;
+    padding: 1rem;
+    z-index: 1;
+    border-radius: 3px 0 0 0;
+}
+
+#timer-wrapper.show {
+	background: #333;
+}
+
+button {
+	background: #3498DB;
+    border-radius: 3px;
+    border: none;
+    color: #fff;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 .5rem;
+    font-size: 14px;
+}
+
+button:hover {
+    background: #2f7cb0;
+}
+
+button:focus,
+input:focus {
+	outline: none;
+}
+
+button.actions {
+    background: transparent;
+    color: #f8f8f8;
+}
+
+button.actions:hover {
+    background: transparent;
+    color: #3498DB;
+}
+
+footer {
+	text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 100%;
+    margin-left: -50%;
+}
+
+.track-name {
+	font-family: 'Avenir Heavy', Helvetica, sans-serif;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.lines {
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    bottom: 33%;
+    left: 0;
+    background: transparent;
+    -webkit-transition-property: width;
+    -webkit-transition-duration: 2s;
+}
+
+.lines.move {
+    width: 0;
+}
+
+.line {
+    display: block;
+    width: 20px;
+    height: 100%;
+    background: #333;
+    margin-bottom: 1rem;
+    vertical-align: middle;
+    -webkit-transition-property: width;
+    -webkit-transition-duration: 5s;
+}
+
+.line.move {
+    width: 100%;
+}
+
+.playlists {
+    display: none;
+}
+
+.playlist {
+    display: none;
+    padding: 0;
+    position: relative;
+    left: 0;
+    -webkit-transition-property: left;
+    -webkit-transition-duration: 2s;
+    cursor: pointer;
+    background: rgba(255,255,255,.9);
+}
+
+.playlist.move {
+    left: -330px;
+}
+
+.playlist .controls {
+    background: #333;
+    text-align: center;
+    padding: .25rem;
+    border-radius: 3px 3px 0 0;
+}
+
+.playlist ol {
+    height: 100%;
+    max-height: 375px;
+    overflow-y: scroll;
+    padding: 20px 20px 20px 40px;
+    margin: 0;
+    border-radius: 0 0 3px 3px;
+    background: transparent;
+    -webkit-transition-property: background;
+    -webkit-transition-duration: 2s;
+}
+
+.playlist ol::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    background: transparent;
+}
+
+.playlist ol::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.playlist ol::-webkit-scrollbar-thumb {
+    background: transparent;
+    -webkit-transition-property: background;
+    -webkit-transition-duration: 2s;
+}
+
+.playlist ol.visible {
+    background: rgba(52,152,219,.25);
+}
+
+.playlist ol.visible::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+.header {
+    color: #3498DB;
+    font-family: 'Avenir Heavy';
+    text-align: center;
+}
+
+nav p {
+    margin: .25rem 0;
+}
+
+ul {
+    padding: 0;
+    list-style-type: none;
+    margin: .5rem 0;
+}
+
+li {
+    margin: .25rem;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+ol li {
+    display: list-item;
+    margin: 0 0 1rem 0;
+}
+
+.active {
+    position: relative;
+    left: -28px;
+    top: 4px;
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    background: #3498DB;
+}
+
+.categories {
+    left: 0;
+    position: relative;
+}
+
+
+
+
+
+
