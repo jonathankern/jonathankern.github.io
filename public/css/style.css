@@ -123,6 +123,7 @@ input.input-small {
 input.input-results {
     width: 204px;
     margin-bottom: 20px;
+    background: #f8f8f8;
 }
 
 .fa {
@@ -225,7 +226,7 @@ footer {
     display: none;
 }
 
-.playlist {
+.tracks {
     display: none;
     padding: 0;
     position: relative;
@@ -236,20 +237,21 @@ footer {
     background: rgba(255,255,255,.9);
 }
 
-.playlist.move {
+.tracks.move {
     left: -330px;
+    background: rgba(255,255,255,0);
 }
 
-.playlist .controls {
+.tracks .controls {
     background: #333;
     text-align: center;
     padding: .25rem;
     border-radius: 3px 3px 0 0;
 }
 
-.playlist ol {
+.tracks ol {
     height: 100%;
-    max-height: 375px;
+    max-height: 300px;
     overflow-y: scroll;
     padding: 20px 20px 20px 40px;
     margin: 0;
@@ -259,28 +261,28 @@ footer {
     -webkit-transition-duration: 2s;
 }
 
-.playlist ol::-webkit-scrollbar-track {
+.tracks ol::-webkit-scrollbar-track {
     -webkit-box-shadow: none;
     background: transparent;
 }
 
-.playlist ol::-webkit-scrollbar {
+.tracks ol::-webkit-scrollbar {
     width: 5px;
     background: transparent;
 }
 
 .sidebar::-webkit-scrollbar-thumb,
-.playlist ol::-webkit-scrollbar-thumb {
+.tracks ol::-webkit-scrollbar-thumb {
     background: transparent;
     -webkit-transition-property: background;
     -webkit-transition-duration: 2s;
 }
 
-.playlist ol.visible {
+.tracks ol.visible {
     background: rgba(52,152,219,.25);
 }
 
-.playlist ol.visible::-webkit-scrollbar-thumb {
+.tracks ol.visible::-webkit-scrollbar-thumb {
     background: #333;
 }
 

@@ -1,10 +1,8 @@
-// Jonathan Kern
-// Repercussion: An audio reactive web app
-//
-// Spotify API
-// Web Audio API
-// WebGL
-// THREE.js
+// Author: Jonathan Kern
+// Last Updated: 01/22/18
+
+// Repercussion: An audio reactive web app built off of the Spotify API in conjunction with THREE.js
+
 
 // Initialize Firebase
 const config = {
@@ -36,7 +34,7 @@ const $logo = $('.logo a');
 const $sidebarLeft = $('.sidebar--left');
 const $sidebarRight = $('.sidebar--right');
 const $playlists = $('.playlists');
-const $playlist = $('.playlist');
+const $tracks = $('.tracks');
 const $optionsButton = $('.options-button');
 const $options = $('.options');
 const $updateColorButton = $('#update-color-button');
@@ -53,6 +51,7 @@ const $line = $('.line');
 const audioLoader = new THREE.AudioLoader();
 const listener = new THREE.AudioListener();
 const audio = new THREE.Audio(listener);
+const track = '../assets/audio/50Cent-InDaClub.mp3';
 
 // Frequency must be one of: 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, and 32768
 let fftSize = 32768;
@@ -62,15 +61,18 @@ let camera;
 let renderer;
 let analyser;
 let uniforms;
-// let song = '../assets/FrancescaLombardo-WhatToDo.mp3';
-let song = '../assets/50Cent-InDaClub.mp3';
+
+let userInputValue;
 
 $(document).ready(function() {
+
+    // clear input when clicking into it
     $('input').on('focus', function() {
         $(this).val('');
     });
 
-    $('.options').submit(function(event) {
+    // prevent page from loading on form
+    $options.submit(function(event) {
         event.preventDefault();
     });
 
@@ -79,100 +81,70 @@ $(document).ready(function() {
         $options.fadeToggle('slow', 'linear');
     });
 
-    $updateColorButton.on('click', function(event) {
-        event.preventDefault();
-        // console.log('color button was clicked');
+    // update colors in database
+    $updateColorButton.on('click', function() {
         const inputColorValueR = $('#input-color-r').val();
-        console.log(inputColorValueR);
-
         const inputColorValueG = $('#input-color-g').val();
-        console.log(inputColorValueG);
-
         const inputColorValueB = $('#input-color-b').val();
-        console.log(inputColorValueB);
-
-        $('#input-color-r').val('');
-        $('#input-color-g').val('');
-        $('#input-color-b').val('');
-
         const colorReference = databaseReference.ref('color');
 
-        colorReference.push({
+        colorReference.update({
             rValue: inputColorValueR,
             gValue: inputColorValueG,
             bValue: inputColorValueB
         });
-        console.log(colorReference);
 
+        // make 3 values set to one string
+        userInputValue = inputColorValueR + ', ' + inputColorValueG + ', ' + inputColorValueB;
+
+        // update input with new value
+        $("#results-input-color").attr('value', userInputValue);
+
+        // clear input
+        $('#input-color-r').val('');
+        $('#input-color-g').val('');
+        $('#input-color-b').val('');
     });
 
-    $updateLineHeightButton.on('click', function(event) {
-        event.preventDefault();
-        // console.log('line height button was clicked');
+    // update line height in database
+    $updateLineHeightButton.on('click', function() {
         const inputLineHeightValue = $('#input-line-height').val();
-        console.log(inputLineHeightValue);
-
-        $('#input-line-height').val('');
-
         const lineHeightReference = databaseReference.ref('lineHeight');
 
-        lineHeightReference.push({
+        lineHeightReference.update({
             value: inputLineHeightValue
         });
-        console.log(lineHeightReference);
 
+        userInputValue = inputLineHeightValue;
+
+        // update input with new value
+        $("#results-input-line-height").attr('value', userInputValue);
+
+        // clear input
+        $('#input-line-height').val('');
     });
 
-    $updateFrequencyButton.on('click', function(event) {
-        event.preventDefault();
-        // console.log('frequency button was clicked');
-
+    // update frequency in database
+    $updateFrequencyButton.on('click', function() {
         const inputFrequencyValue = $('#input-frequency').val();
-        console.log(inputFrequencyValue);
-
-        $('#input-frequency').val('');
-
         const frequencyReference = databaseReference.ref('frequency');
 
-        frequencyReference.push({
+        frequencyReference.update({
             value: inputFrequencyValue
         });
-        console.log(frequencyReference);
 
+        userInputValue = inputFrequencyValue;
 
-        // fftSize = inputFrequencyValue;
-        // console.log(fftSize);
-        // return init(inputFrequencyValue);
+        // update input with new value
+        $("#results-input-frequency").attr('value', userInputValue);
+
+        // clear input
+        $('#input-frequency').val('');
     });
-
-    getValues();
 });
 
-function getValues() {
-    databaseReference.ref('color').on('value', function(results) {
-        console.log(results);
-        // turn into string and display like R, G, B
 
-        const $resultsInputColor = $('#results-input-color');
-        $resultsInputColor.append(results);
-    });
-
-    databaseReference.ref('lineHeight').on('value', function(results) {
-        console.log(results);
-
-        const $resultsLineHeight = $('#results-input-line-height');
-        $resultsLineHeight.append(results);
-    });
-
-    databaseReference.ref('frequency').on('value', function(results) {
-        console.log(results);
-
-        const $resultsInputFrequency = $('#results-input-frequency');
-        $resultsInputFrequency.append(results);
-    });
-}
-
-
+// Categories
 function fetchCategoryData(requestUrl) {
     fetch(requestUrl, {
         headers: {
@@ -186,7 +158,6 @@ function fetchCategoryData(requestUrl) {
             if (response.ok) {
                 // get status
                 status = response.status;
-                // console.log(status);
 
                 // pull data and parse json
                 return response.json();
@@ -201,8 +172,6 @@ function fetchCategoryData(requestUrl) {
 }
 
 function categories(data) {
-    // console.log(data);
-
     const categoriesList = data.categories.items;
 
     categoriesList.forEach(function(category) {
@@ -211,7 +180,6 @@ function categories(data) {
 
         return categoriesUI(categoryId, categoryName);
     });
-
 }
 
 function categoriesUI(categoryId, categoryName) {
@@ -227,12 +195,16 @@ function categoriesUI(categoryId, categoryName) {
 
     // trigger playlists on click
     $categoryButton.on('click', function() {
-        // console.log(categoryId);
-
         $playlists.show();
 
         // slide categories to the left to make room for playlists
-        $('.categories').css( {'position': 'relative', 'left': '-1000px', 'display': 'none'} );
+        $('.categories').css(
+            {
+                'position': 'relative',
+                'left': '-1000px',
+                'display': 'none'
+            }
+        );
 
         const playlistsRequestUrl = 'https://api.spotify.com/v1/browse/categories/' + categoryId + '/playlists';
 
@@ -240,6 +212,8 @@ function categoriesUI(categoryId, categoryName) {
     });
 }
 
+
+// Playlists
 function fetchPlaylistsData(requestUrl) {
     fetch(requestUrl, {
         headers: {
@@ -253,7 +227,6 @@ function fetchPlaylistsData(requestUrl) {
             if (response.ok) {
                 // get status
                 status = response.status;
-                // console.log(status);
 
                 // pull data and parse json
                 return response.json();
@@ -261,14 +234,11 @@ function fetchPlaylistsData(requestUrl) {
                 alert('there was a problem with the request');
             }
         }).then(function(data) {
-            // console.log(data);
-
             return playlists(data);
     });
 }
 
 function playlists(data) {
-    // console.log(data);
     const playlistsData = data.playlists.items;
 
     playlistsData.forEach(function(playlists) {
@@ -284,8 +254,6 @@ function playlists(data) {
 }
 
 function playlistsUI(playlistsName, playlistsTracksHref, playlistsTracksTotal, playlistsSpotifyID, playlistsUserID, playlistsURI) {
-    // console.log(playlistsURI);
-
     // UI elements
     const $playlistsList = $('.playlists ul');
     const $playlistsListItem = $('<li></li>');
@@ -298,9 +266,7 @@ function playlistsUI(playlistsName, playlistsTracksHref, playlistsTracksTotal, p
 
     // trigger playlist on click
     $playlistsButton.on('click', function() {
-        // console.log(playlistsURI);
-
-        $playlist.show();
+        $tracks.show();
 
         $playlists.css(
             {
@@ -320,10 +286,11 @@ function playlistsUI(playlistsName, playlistsTracksHref, playlistsTracksTotal, p
         tracksRequestUrl = 'https://api.spotify.com/v1/users/' + playlistsUserID + '/playlists/' + playlistsSpotifyID + '/tracks';
 
         return fetchTracksData(tracksRequestUrl);
-
     });
 }
 
+
+// Tracks
 function fetchTracksData(requestUrl) {
     fetch(requestUrl, {
         headers: {
@@ -337,7 +304,6 @@ function fetchTracksData(requestUrl) {
             if (response.ok) {
                 // get status
                 status = response.status;
-                // console.log(status);
 
                 // pull data and parse json
                 return response.json();
@@ -345,14 +311,11 @@ function fetchTracksData(requestUrl) {
                 alert('there was a problem with the request');
             }
         }).then(function(data) {
-            // console.log(data);
-
             return tracks(data);
     });
 }
 
 function tracks(data) {
-    // console.log(data);
     const tracksData = data.items;
 
     tracksData.forEach(function(thisTrack) {
@@ -360,27 +323,23 @@ function tracks(data) {
         artistName = thisTrack.track.artists[0].name;
         albumName = thisTrack.track.album.name;
         trackTime = thisTrack.track.duration_ms;
-        trackID = thisTrack.track.id;
-        trackHref = thisTrack.track.href;
-        trackURI = thisTrack.track.uri;
 
-        return tracksUI(trackName, artistName, albumName, trackTime, trackID, trackHref, trackURI);
+        return tracksUI(trackName, artistName, albumName, trackTime);
     });
 }
 
-function tracksUI(trackName, artistName, albumName, trackTime, trackID, trackHref, trackURI) {
-
-    $('.playlist .controls').show();
+function tracksUI(trackName, artistName, albumName, trackTime) {
+    $('.tracks .controls').show();
 
     // UI elements
-    const $orderedListElement = $('.playlist ol');
+    const $orderedListElement = $('.tracks ol');
     const $listElement = $('<li></li>');
-    const $firstListElement = $('.playlist ol li:first-child');
+    const $firstListElement = $('.tracks ol li:first-child');
     const $trackName = $('<p class="track-name"></p>');
     const $trackInfo = $('<small></small>');
     const $artistName = $('<span class="artist-name"> </span>');
     const $albumName = $('<span class="album-name"> - </span>');
-    const $trackTime = $('<span class="song-time"> - </span>');
+    const $trackTime = $('<span class="track-time"> - </span>');
 
     // Append to DOM
     $trackName.append(trackName);
@@ -405,12 +364,10 @@ function tracksUI(trackName, artistName, albumName, trackTime, trackID, trackHre
             $(this).removeClass('visible');
         }
     );
-
-    $trackName.on('click', function() {
-        audioReactor();
-    });
 }
 
+
+// Audio reactor
 function audioReactor() {
     $line.css('width', '0');
     $lines.addClass('move');
@@ -421,7 +378,7 @@ function audioReactor() {
     animate();
 }
 
-function init(inputFrequencyValue) {
+function init() {
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0xffffff);
@@ -431,9 +388,9 @@ function init(inputFrequencyValue) {
     scene = new THREE.Scene();
     camera = new THREE.Camera();
 
-    inputFrequencyValue = fftSize;
+    fftSize;
 
-    audioLoader.load(song, function(buffer) {
+    audioLoader.load(track, function(buffer) {
         audio.setBuffer(buffer);
         audio.setLoop(true);
         audio.play();
@@ -503,7 +460,13 @@ function toggleFullscreen(element) {
     }
 }
 
+
+// reset everything
 function reset() {
+    audio.pause();
+
+    $tracks.removeClass('move');
+
     fetchCategoryData(categoryRequestUrl);
 
     $line.addClass('move');
@@ -518,8 +481,7 @@ function reset() {
 }
 
 
-// playlist controls
-$playlist.on('click', function() {
+$tracks.on('click', function() {
     $(this).toggleClass('move', 1000, "easeInOut");
 });
 
@@ -533,7 +495,24 @@ $playButton.on('click', function() {
 
 $pauseButton.on('click', function() {
     audio.pause();
-    reset();
+
+    $('.categories').css(
+        {
+            'position': 'relative',
+            'left': '0',
+            'display': 'block'
+        }
+    );
+
+    $playlists.show();
+
+    $tracks.hide();
+
+    $('.sidebar--right .controls').hide();
+
+    $lines.removeClass('move');
+    $line.css('width', '100%');
+
 });
 
 $forwardButton.on('click', function() {
@@ -547,7 +526,7 @@ $container.on('click', function() {
 
     $controls.fadeToggle('slow', 'linear');
     $header.fadeToggle('slow', 'linear');
-    $playlist.fadeToggle('slow', 'linear');
+    $tracks.fadeToggle('slow', 'linear');
 });
 
 

@@ -28,7 +28,7 @@
 					<p>Select a playlist:</p>
 					<ul></ul>
 				</nav>
-				<nav class="playlist">
+				<nav class="tracks">
 					<p class="header"></p>
 					<div class="controls">
 						<button class="actions rewind"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
@@ -57,27 +57,27 @@
 					<button class="options-button"><i class="fa fa-bars" aria-hidden="true"></i></button>
 					<form class="options">
 						<div class="row">
-							<input class="input-small" id="input-color-r" type="text" placeholder="R (0.86)" value="0.86">
-							<input class="input-small" id="input-color-g" type="text" placeholder="G (0.56)" value="0.56">
-							<input class="input-small" id="input-color-b" type="text" placeholder="B (0.15)" value="0.15">
+							<input class="input-small" id="input-color-r" type="text" placeholder="R (0.92)" value="0.92">
+							<input class="input-small" id="input-color-g" type="text" placeholder="G (0.24)" value="0.24">
+							<input class="input-small" id="input-color-b" type="text" placeholder="B (0.31)" value="0.31">
 							<button id="update-color-button" class="update small" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 						</div>
 						<div class="row">
-							<input id="results-input-color" class="input-results" placeholder="R, G, B Value" disabled>
+							<input id="results-input-color" class="input-results" placeholder="R, G, B Value" value="" disabled>
 						</div>
 						<div class="row">
 							<input id="input-line-height" type="text" placeholder="Line Height (0.15)" value="0.15">
 							<button id="update-line-height-button" class="update small" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 						</div>
 						<div class="row">
-							<input id="results-input-line-height" class="input-results" placeholder="Line Height Value" disabled>
+							<input id="results-input-line-height" class="input-results" placeholder="Line Height Value" value="" disabled>
 						</div>
 						<div class="row">
 							<input id="input-frequency" type="text" placeholder="Frequency (32768)" value="32768">
 							<button id="update-frequency-button" class="update small" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 						</div>
 						<div class="row">
-							<input id="results-input-frequency" class="input-results" placeholder="Frequency Value" disabled>
+							<input id="results-input-frequency" class="input-results" placeholder="Frequency Value" value="" disabled>
 						</div>
 					</form>
 				</div>
@@ -99,15 +99,16 @@
 		<script id="fragmentShader" type="x-shader/x-fragment">
 			uniform sampler2D tAudioData;
 			varying vec2 vUv;
+
 			void main() {
 				// custom variables
 				float backgroundColorR = 1.0;
 				float backgroundColorG = 1.0;
 				float backgroundColorB = 1.0;
 
-				float lineColorR = 0.86;
-				float lineColorG = 0.56;
-				float lineColorB = 0.15;
+				float lineColorR = 0.92;
+				float lineColorG = 0.24;
+				float lineColorB = 0.31;
 
 				float lineHeight = 0.15;
 
