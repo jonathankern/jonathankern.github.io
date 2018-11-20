@@ -1,0 +1,266 @@
+body {
+    color: #666;
+    font-family: 'Open Sans', Helvetica, sans-serif;
+    font-weight: 400;
+}
+
+#main {
+    margin: 285px auto 100px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1024px;
+    margin: 0 auto;
+    transition: .5s all;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+    color: #444;
+    font-weight: 700;
+    font-family: 'Bitter', 'Times New Roman', sans-serif;
+}
+
+h2 {
+    font-size: 1.15rem;
+}
+
+h2 > i {
+    margin-right: .25rem;
+    line-height: inherit;
+    font-size: inherit;
+}
+
+p {
+    line-height: 1.6;
+}
+
+header {
+    background-color: rgba(255,104,111,.96);
+    padding: 2rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+header .container {
+    display: flex;
+    flex-flow: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    color: #FFF;
+    font-size: 4rem;
+    margin: 0;
+}
+
+header nav {
+    text-align: right;
+}
+
+header nav ul {
+    padding: 0;
+    margin: 0;
+    margin-right: 0;
+    list-style: none;
+}
+
+header nav ul li {
+    padding: .25rem 0;
+}
+
+header nav ul li a {
+    background: transparent;
+    color: #FFF;
+    font-size: 16px;
+    padding: .5rem 1rem;
+    transition: .5s all;
+    display: block;
+}
+
+header nav ul li a:hover,
+header nav ul li a.selected {
+    background: #fff;
+    color: #FF686F;
+}
+
+.article {
+    border-bottom: 1px solid rgba(255,104,111,.2);
+    border-left: 1px solid rgba(255,104,111,0);
+    border-right: 1px solid rgba(255,104,111,0);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 2rem;
+    background: #fff;
+    transition: .5s all;
+}
+
+.article:first-of-type {
+    border-top: 1px solid rgba(255,104,111,.2);
+}
+
+.article:hover {
+    background: rgba(0,0,0,.03);
+    cursor: pointer;
+    border-left: 1px solid rgba(255,104,111,.2);
+    border-right: 1px solid rgba(255,104,111,.2);
+}
+
+.article:hover .articleContent h3 {
+    color: #FF686F;
+}
+
+.article .featuredImage {
+    width: 100%;
+    max-width: 75px;
+    height: auto;
+    overflow: hidden;
+}
+
+.article .featuredImage img {
+    width: 100%;
+    min-width: 75px;
+    height: auto;
+}
+
+.article .articleContent {
+    margin-left: 2rem;
+}
+
+.article .articleContent a {
+    text-decoration: none;
+}
+
+.article .articleContent h3 {
+    margin: 0;
+    color: #444;
+    font-size: 1.5rem;
+    transition: .5s all;
+}
+
+.article .articleContent h6 {
+    margin: .75rem 0 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.article .impressions {
+    display: block;
+    margin-top: .25rem;
+    font-size: 12px;
+    color: #bababa;
+}
+
+#popUp {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,.96);
+}
+
+#popUp .closePopUp {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #FF686F;
+    text-decoration: none;
+}
+
+#popUp .closePopUp:hover {
+    color: #E55E64;
+}
+
+#popUp.loader {
+    background-image: url(../images/ajax_loader.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#popUp.loader .container {
+    display: none;
+}
+
+#popUp .container {
+    margin-top: 80px;
+    width: 70%;
+}
+
+#popUp h1 {
+    margin-bottom: 0;
+}
+
+#popUp .popUpAction {
+    padding: .75rem 1.5rem;
+    background-color: #FF686F;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 0;
+    margin-top: 1rem;
+    display: inline-block;
+    transition: .5s all;
+}
+
+#popUp .popUpAction:hover {
+    background: #E55E64;
+}
+
+@media only screen
+    and (max-width: 812px) {
+
+    header {
+        position: static;
+    }
+
+    #main {
+        margin-top: 2.5rem;
+    }
+
+    header .container {
+        display: block;
+        width: 100%;
+    }
+
+    header h1,
+    header nav {
+        text-align: center;
+    }
+
+    header h1 {
+        font-size: 3rem;
+    }
+
+    header nav {
+        margin-top: .75rem;
+    }
+
+    #popUp .container {
+        width: 70%;
+    }
+
+    #popUp h1 {
+        font-size: 1.5rem;
+    }
+
+    .article {
+        display: block;
+    }
+
+    .article .articleContent {
+        margin: 1rem 0 0;
+    }
+}
+
+
